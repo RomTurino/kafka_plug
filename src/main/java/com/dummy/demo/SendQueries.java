@@ -7,14 +7,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.Month;
 
 @RestController
 @RequestMapping
-public class CreatePerson {
-    @RequestMapping(value="/create_person_method", method = RequestMethod.POST)
+public class SendQueries {
+    @RequestMapping(value="/create_book", method = RequestMethod.POST)
     public ResponseEntity<String> method(@RequestBody PatternClass requestObject) throws IOException{
         send(requestObject);
+
+        return ResponseEntity.status(200).body("Message received successfully"); //Возвращаем 200 статус-код и сообщение, что всё прошло ок
+    }
+
+    public ResponseEntity<String> onlyAnswer(@RequestBody PatternClass requestObject) throws IOException{
 
         return ResponseEntity.status(200).body("Message received successfully"); //Возвращаем 200 статус-код и сообщение, что всё прошло ок
     }
@@ -31,7 +35,6 @@ public class CreatePerson {
 
 
 
-
     @GetMapping("/get_joke")
     public ResponseEntity<String> getJoke() {
         PatternGet response = new PatternGet();
@@ -39,7 +42,7 @@ public class CreatePerson {
         response.setDate(LocalDate.now());
         kafkaJokeTemplate.send("123", response);
 
-        return ResponseEntity.status(200).body("Шутка отправлена"); // Возвращаем 200 статус-код с сообщением
+        return ResponseEntity.status(200).body("Success"); // Возвращаем 200 статус-код с сообщением
     }
 
 
